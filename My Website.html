@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Justus Akpan — Tech Mentor & Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --ink:      #0e0e0e;
+      --paper:    #f5f1eb;
+      --cream:    #ede8e0;
+      --accent:   #c84b2f;
+      --muted:    #7a756d;
+      --border:   #d4cfc6;
+
+      --serif: "Instrument Serif", Georgia, serif;
+      --sans:  "DM Sans", system-ui, sans-serif;
+
+      --r-sm: 6px;
+      --r-md: 12px;
+      --r-lg: 24px;
+
+      --max: 1060px;
+      --gap: clamp(2rem, 5vw, 4rem);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--paper);
+      color: var(--ink);
+      line-height: 1.65;
+      font-size: clamp(15px, 1.1vw, 17px);
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+    ul { list-style: none; }
+
+    /* ─── SKIP LINK (accessibility) ──────────────────────────── */
+    .skip-link {
+      position: absolute; top: -40px; left: 1rem;
+      background: var(--accent); color: #fff; padding: .4em .9em;
+      border-radius: var(--r-sm); font-weight: 500; z-index: 9999;
+      transition: top .2s;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--paper);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+    }
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gap);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 58px;
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      text-decoration: none;
+      letter-spacing: -.01em;
+    }
+    .nav-logo span { color: var(--accent); font-style: italic; }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 500;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+
+    @media (max-width: 540px) {
+      .nav-links { gap: 1.1rem; }
+      .nav-links a { font-size: .75rem; }
+    }
+
+    /* ─── HERO ─────────────────────────────────────────────────── */
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: clamp(3.5rem, 10vw, 7rem) var(--gap) clamp(3rem, 8vw, 5.5rem);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: end;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .3em .9em;
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+    .hero-tag::before {
+      content: "";
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #3bc46a;
+      box-shadow: 0 0 0 2px #3bc46a33;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      line-height: 1.08;
+      letter-spacing: -.02em;
+      max-width: 16ch;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      margin-top: 1.4rem;
+      max-width: 44ch;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .hero-cta {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: var(--r-sm);
+      padding: .7em 1.6em;
+      font-weight: 500;
+      font-size: .9rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 16px #0e0e0e18; }
+    .btn-primary { background: var(--ink); color: var(--paper); }
+    .btn-outline { border: 1.5px solid var(--border); color: var(--ink); }
+    .btn-outline:hover { border-color: var(--ink); }
+
+    .hero-badge {
+      align-self: flex-start;
+      margin-top: .5rem;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 1.4rem 1.6rem;
+      text-align: center;
+      width: 150px;
+      flex-shrink: 0;
+    }
+    .hero-badge .badge-num {
+      font-family: var(--serif);
+      font-size: 2.6rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .hero-badge .badge-label {
+      margin-top: .3rem;
+      font-size: .72rem;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    @media (max-width: 600px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-badge { width: 100%; display: flex; align-items: center; gap: 1rem; text-align: left; padding: 1rem 1.4rem; }
+      .hero-badge .badge-num { font-size: 2rem; }
+    }
+
+    /* ─── DIVIDER ─────────────────────────────────────────────── */
+    .divider {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gap);
+    }
+    .divider hr {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── SECTION SHELL ───────────────────────────────────────── */
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: var(--gap) var(--gap);
+    }
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+      font-size: .75rem;
+      font-weight: 500;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      max-width: 24ch;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* ─── ABOUT ───────────────────────────────────────────────── */
+    #about .about-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-text p + p { margin-top: 1rem; }
+    .about-text p { color: #3a3631; }
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+    }
+    .stat-cell {
+      background: var(--paper);
+      padding: 1.4rem 1.6rem;
+    }
+    .stat-cell .stat-n {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .stat-cell .stat-d {
+      margin-top: .3rem;
+      font-size: .8rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .location-pill {
+      margin-top: 1.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: .82rem;
+      color: var(--muted);
+    }
+    .location-pill svg { width: 14px; height: 14px; color: var(--accent); }
+
+    @media (max-width: 700px) {
+      #about .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+    }
+
+    /* ─── WHAT I TEACH ────────────────────────────────────────── */
+    #teach { background: var(--cream); border-radius: var(--r-lg); margin: 1rem auto; }
+
+    #teach .teach-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .teach-card {
+      background: var(--paper);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      padding: 1.6rem;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .teach-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px #0e0e0e10;
+    }
+    .teach-icon {
+      width: 42px; height: 42px;
+      border-radius: var(--r-sm);
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    .teach-card h3 {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      margin-bottom: .5rem;
+    }
+    .teach-card p {
+      font-size: .86rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── TOOLS ───────────────────────────────────────────────── */
+    #tools .tools-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .tool-card {
+      border: 1.5px solid var(--border);
+      border-radius: var(--r-md);
+      overflow: hidden;
+      transition: border-color .2s;
+    }
+    .tool-card:hover { border-color: var(--ink); }
+    .tool-top {
+      padding: 1.8rem 1.8rem 1.2rem;
+    }
+    .tool-emoji {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .tool-card h3 {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      margin-bottom: .4rem;
+    }
+    .tool-card .tool-type {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .tool-card p {
+      margin-top: .7rem;
+      font-size: .86rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .tool-bottom {
+      border-top: 1px solid var(--border);
+      padding: .8rem 1.8rem;
+      font-size: .78rem;
+      font-weight: 500;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+    .tool-bottom svg { width: 14px; height: 14px; }
+
+    @media (max-width: 700px) {
+      #tools .tools-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 701px) and (max-width: 900px) {
+      #tools .tools-grid { grid-template-columns: 1fr 1fr; }
+      #tools .tools-grid .tool-card:last-child { grid-column: span 2; }
+    }
+
+    /* ─── CONTACT ─────────────────────────────────────────────── */
+    #contact {
+      background: var(--ink);
+      color: var(--paper);
+      border-radius: var(--r-lg);
+      margin: 1rem auto 2.5rem;
+    }
+    #contact .section-label { color: #8a8580; }
+    #contact .section-label::after { background: #2a2a2a; }
+    #contact .section-title { color: var(--paper); }
+    #contact .section-title em { color: #e8a090; }
+    .contact-sub {
+      margin-top: 1rem;
+      max-width: 48ch;
+      color: #8a8580;
+      line-height: 1.7;
+    }
+    .contact-grid {
+      margin-top: 2.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2rem;
+      align-items: start;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: .4rem;
+    }
+    .form-field label {
+      font-size: .78rem;
+      font-weight: 500;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: #8a8580;
+    }
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: var(--r-sm);
+      color: var(--paper);
+      font-family: var(--sans);
+      font-size: .9rem;
+      padding: .75em 1em;
+      outline: none;
+      transition: border-color .2s;
+      width: 100%;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: #4a4a4a; }
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus { border-color: #8a8580; }
+    .form-field select option { background: #1a1a1a; }
+    .form-field textarea { resize: vertical; min-height: 120px; }
+    .btn-send {
+      align-self: flex-start;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+    .btn-send:hover { background: #b03e25; transform: translateY(-1px); box-shadow: 0 4px 16px #c84b2f44; }
+
+    .contact-aside {
+      display: flex;
+      flex-direction: column;
+      gap: .7rem;
+      padding-top: .2rem;
+    }
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+      text-decoration: none;
+      color: var(--paper);
+      background: #1a1a1a;
+      border: 1px solid #2d2d2d;
+      border-radius: var(--r-sm);
+      padding: .9rem 1.2rem;
+      font-size: .85rem;
+      transition: border-color .2s, background .2s;
+      white-space: nowrap;
+    }
+    .contact-link:hover { border-color: #4a4a4a; background: #222; }
+    .contact-link svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--accent); }
+
+    @media (max-width: 680px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-aside { flex-direction: row; flex-wrap: wrap; }
+      .contact-link { flex: 1 1 160px; }
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    footer {
+      max-width: var(--max);
+      margin: 0 auto 2rem;
+      padding: 0 var(--gap);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: .8rem;
+      font-size: .78rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+
+    /* ─── ANIMATIONS ──────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero > * {
+      animation: fadeUp .6s ease both;
+    }
+    .hero-tag        { animation-delay: .05s; }
+    .hero h1         { animation-delay: .15s; }
+    .hero-sub        { animation-delay: .25s; }
+    .hero-cta        { animation-delay: .35s; }
+    .hero-badge      { animation-delay: .45s; }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+    [data-reveal].visible {
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a class="skip-link" href="#about">Skip to main content</a>
+
+  <!-- ── NAV ──────────────────────────────────────────────────── -->
+  <nav aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" aria-label="Justus Akpan home">Justus <span>Akpan</span></a>
+      <ul class="nav-links" role="list">
+        <li><a href="#about">About</a></li>
+        <li><a href="#teach">Teaching</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────── -->
+  <header class="hero" role="banner">
+    <div>
+      <div class="hero-tag" aria-label="Currently available">Available for sessions</div>
+      <h1>Tech Mentor &amp; <em>Creative</em> Designer</h1>
+      <p class="hero-sub">
+        Helping individuals and small teams across the Nigeria build confidence with technology,
+        design and digital workflows — one session at a time.
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn btn-primary">Book a session</a>
+        <a href="#teach" class="btn btn-outline">What I teach</a>
+      </div>
+    </div>
+    <aside class="hero-badge" aria-label="10+ years experience">
+      <span class="badge-num" aria-hidden="true">10+</span>
+      <span class="badge-label">Years Nigeria Experience</span>
+    </aside>
+  </header>
+
+  <div class="divider"><hr /></div>
+
+  <!-- ── ABOUT ────────────────────────────────────────────────── -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="section-label" aria-hidden="true">01 — About</div>
+    <h2 id="about-heading" class="section-title">
+      Design sensibility meets <em>technical clarity</em>
+    </h2>
+
+    <div class="about-grid" data-reveal>
+      <div class="about-text">
+        <p>
+          I'm Emediong Justus Akpan, a Nigerian-based tech mentor, graphic designer and computer operator
+          with over a decade of hands-on experience spanning visual communication, desktop
+          systems and practical digital training.
+        </p>
+        <p>
+          My work sits at the intersection of creative craft and everyday computing. Whether
+          you're a complete beginner wanting to feel at ease with a laptop, or a small
+          business owner who needs polished graphics without the agency price tag — I'm here
+          to close that gap.
+        </p>
+        <p>
+          I offer relaxed, jargon-free mentoring sessions (online or in-person across NIGERIA), portfolio reviews, and bespoke design work. Every client leaves with new
+          confidence and clear, actionable skills.
+        </p>
+        <p class="location-pill">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M8 1.5C5.5 1.5 3.5 3.5 3.5 6c0 3.5 4.5 8.5 4.5 8.5s4.5-5 4.5-8.5c0-2.5-2-4.5-4.5-4.5z"/>
+            <circle cx="8" cy="6" r="1.5"/>
+          </svg>
+          Based in Anambra, Nigeria · Remote sessions welcome
+        </p>
+      </div>
+
+      <div class="about-stats" data-reveal>
+        <div class="stat-cell">
+          <div class="stat-n">200+</div>
+          <div class="stat-d">Students mentored</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-n">8 yrs</div>
+          <div class="stat-d">Design practice</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-n">98%</div>
+          <div class="stat-d">Satisfaction rate</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-n">5★</div>
+          <div class="stat-d">Average rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><hr /></div>
+
+  <!-- ── WHAT I TEACH ──────────────────────────────────────────── -->
+  <section id="teach" aria-labelledby="teach-heading">
+    <div class="section-label" aria-hidden="true">02 — What I Teach</div>
+    <h2 id="teach-heading" class="section-title">
+      Practical skills for <em>real-world</em> use
+    </h2>
+
+    <ul class="teach-grid" role="list" data-reveal>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">🖥️</div>
+        <h3>Computer Fundamentals</h3>
+        <p>Files, folders, shortcuts, safe browsing, email management and system maintenance — the essentials no one teaches properly.</p>
+      </li>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">🎨</div>
+        <h3>Graphic Design Basics</h3>
+        <p>Colour theory, typography, layout principles and brand identity — turning blank canvases into professional visuals.</p>
+      </li>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">📐</div>
+        <h3>Desktop Publishing</h3>
+        <p>Creating flyers, brochures, presentations and print-ready documents with professional software and workflow confidence.</p>
+      </li>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">☁️</div>
+        <h3>Cloud &amp; Productivity Tools</h3>
+        <p>Google Workspace, Microsoft 365, cloud storage and collaboration tools — working smarter, from anywhere.</p>
+      </li>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">🔐</div>
+        <h3>Online Safety &amp; Privacy</h3>
+        <p>Passwords, two-factor auth, phishing awareness and data hygiene — staying safe in an increasingly connected world.</p>
+      </li>
+      <li class="teach-card">
+        <div class="teach-icon" aria-hidden="true">💡</div>
+        <h3>AI Tools for Beginners</h3>
+        <p>Practical introductions to ChatGPT, Canva AI and productivity-focused AI tools — demystified and made genuinely useful.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── TOOLS I RECOMMEND ─────────────────────────────────────── -->
+  <section id="tools" aria-labelledby="tools-heading">
+    <div class="section-label" aria-hidden="true">03 — Tools I Recommend</div>
+    <h2 id="tools-heading" class="section-title">
+      My three <em>go-to</em> tools
+    </h2>
+
+    <ul class="tools-grid" role="list" data-reveal>
+      <li class="tool-card">
+        <div class="tool-top">
+          <span class="tool-emoji" role="img" aria-label="Design tool">🎨</span>
+          <div class="tool-type">Design</div>
+          <h3>Canva</h3>
+          <p>
+            Canva bridges the gap between professional design and everyday accessibility.
+            Drag-and-drop templates make it easy for beginners to produce great-looking
+            graphics, social posts, and presentations without needing years of practice.
+          </p>
+        </div>
+        <div class="tool-bottom">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+          Free tier available · canva.com
+        </div>
+      </li>
+
+      <li class="tool-card">
+        <div class="tool-top">
+          <span class="tool-emoji" role="img" aria-label="Password manager">🔐</span>
+          <div class="tool-type">Security</div>
+          <h3>Bitwarden</h3>
+          <p>
+            Open-source, 9ja-friendly and completely free for personal use. Bitwarden stores
+            all your passwords behind one master password, auto-fills login forms, and syncs
+            across every device — no excuses for weak passwords any more.
+          </p>
+        </div>
+        <div class="tool-bottom">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+          Free &amp; open source · bitwarden.com
+        </div>
+      </li>
+
+      <li class="tool-card">
+        <div class="tool-top">
+          <span class="tool-emoji" role="img" aria-label="Video calling">📹</span>
+          <div class="tool-type">Collaboration</div>
+          <h3>Google Meet</h3>
+          <p>
+            Simple, reliable and available to anyone with a free Google account — no
+            downloads required. Perfect for remote mentoring sessions with screen-sharing,
+            captions, and stable performance across different connection speeds.
+          </p>
+        </div>
+        <div class="tool-bottom">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 1l2 5h5l-4 3 1.5 5L8 11l-4.5 3L5 9 1 6h5z"/></svg>
+          Free for personal use · meet.google.com
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── CONTACT ───────────────────────────────────────────────── -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="section-label" aria-hidden="true">04 — Contact</div>
+    <h2 id="contact-heading" class="section-title">
+      Let's work <em>together</em>
+    </h2>
+    <p class="contact-sub">
+      Ready to book a session, commission a design, or just ask a question?
+      Fill in the form or reach out directly — I reply within one working day.
+    </p>
+
+    <div class="contact-grid" data-reveal>
+      <form class="contact-form" aria-label="Contact form" onsubmit="handleSubmit(event)" novalidate>
+        <div class="form-row">
+          <div class="form-field">
+            <label for="name">Your name</label>
+            <input type="text" id="name" name="name" placeholder="Chidera Chidi" autocomplete="name" required />
+          </div>
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="Chidera@example.com" autocomplete="email" required />
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="interest">I'm interested in…</label>
+          <select id="interest" name="interest">
+            <option value="">Select an option</option>
+            <option value="mentoring">Tech Mentoring</option>
+            <option value="design">Graphic Design</option>
+            <option value="both">Both</option>
+            <option value="other">Something else</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Tell me a bit about what you need…" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-send" id="submit-btn">Send message →</button>
+        <p id="form-status" role="status" aria-live="polite" style="font-size:.82rem;color:#8a8580;min-height:1.2em;"></p>
+      </form>
+
+      <nav class="contact-aside" aria-label="Direct contact links">
+        <a href="mailto:emediong@gmail.com" class="contact-link">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <rect x="2" y="4" width="16" height="13" rx="2"/>
+            <path d="M2 7l8 5 8-5"/>
+          </svg>
+          emediong639@gmail.com
+        </a>
+        <a href="tel:+23408160694926" class="contact-link">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+            <path d="M3 3h4l2 4-2.5 1.5a11 11 0 0 0 5 5L13 11l4 2v4a1 1 0 0 1-1 1C6.163 18 2 13.837 2 4a1 1 0 0 1 1-1z"/>
+          </svg>
+          +234 816 069 4926
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="contact-link">
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M4.5 6.375a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM3 8h3v9H3V8zm5 0h2.9v1.3h.04c.4-.76 1.4-1.56 2.88-1.56C16.46 7.74 17 9.57 17 12v5h-3v-4.43c0-1.06-.02-2.42-1.47-2.42-1.48 0-1.71 1.15-1.71 2.34V17H8V8z"/>
+          </svg>
+          linkedin.com/in/emedion-akpan
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ────────────────────────────────────────────────── -->
+  <footer role="contentinfo">
+    <span>© 2026 Justus Akpan · Anambra, Nigeria</span>
+    <span>
+      <a href="#about">Back to top ↑</a>
+    </span>
+  </footer>
+
+  <!-- ── SCRIPTS ───────────────────────────────────────────────── -->
+  <script>
+    /* Scroll reveal */
+    const reveals = document.querySelectorAll('[data-reveal]');
+    const io = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }),
+      { threshold: 0.12 }
+    );
+    reveals.forEach(el => io.observe(el));
+
+    /* Contact form */
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const status = document.getElementById('form-status');
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = '✓ Message sent!';
+        status.textContent = 'Thanks! I\'ll be in touch within one working day.';
+        e.target.reset();
+        setTimeout(() => {
+          btn.textContent = 'Send message →';
+          btn.disabled = false;
+          status.textContent = '';
+        }, 4000);
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
